@@ -8,12 +8,24 @@ importers:
 
   .:
     dependencies:
+      '@ai-sdk/openai':
+        specifier: ^1.2.6
+        version: 1.2.6(zod@3.24.2)
       '@anthropic-ai/sdk':
         specifier: ^0.39.0
         version: 0.39.0
+      ai:
+        specifier: ^4.1.63
+        version: 4.1.63(react@19.0.0)(zod@3.24.2)
       composio-core:
-        specifier: ^0.5.18
+        specifier: 0.5.29
         version: 0.5.29(@ai-sdk/openai@1.2.6(zod@3.24.2))(@cloudflare/workers-types@4.20250317.0)(@langchain/core@0.3.42(openai@4.87.4(zod@3.24.2)))(@langchain/openai@0.4.5(@langchain/core@0.3.42(openai@4.87.4(zod@3.24.2))))(ai@4.1.63(react@19.0.0)(zod@3.24.2))(langchain@0.3.19(@langchain/core@0.3.42(openai@4.87.4(zod@3.24.2)))(axios@1.8.3)(openai@4.87.4(zod@3.24.2)))(openai@4.87.4(zod@3.24.2))
+      hono:
+        specifier: ^4.7.4
+        version: 4.7.4
+      openai:
+        specifier: ^4.87.4
+        version: 4.87.4(zod@3.24.2)
 
 packages:
 
@@ -391,6 +403,10 @@ packages:
   hasown@2.0.2:
     resolution: {integrity: sha512-0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==}
     engines: {node: '>= 0.4'}
+
+  hono@4.7.4:
+    resolution: {integrity: sha512-Pst8FuGqz3L7tFF+u9Pu70eI0xa5S3LPUmrNd5Jm8nTHze9FxLTK9Kaj5g/k4UcwuJSXTP65SyHOPLrffpcAJg==}
+    engines: {node: '>=16.9.0'}
 
   humanize-ms@1.2.1:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
@@ -1141,6 +1157,8 @@ snapshots:
   hasown@2.0.2:
     dependencies:
       function-bind: 1.1.2
+
+  hono@4.7.4: {}
 
   humanize-ms@1.2.1:
     dependencies:
