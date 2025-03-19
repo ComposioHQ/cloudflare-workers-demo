@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { OpenAIToolSet, ComposioError, COMPOSIO_SDK_ERROR_CODES, VercelAIToolSet } from "composio-core"
 import { generateText } from "ai";
-import { createOpenAI } from "@ai-sdk/openai";
+import { createAnthropic } from "@ai-sdk/anthropic";
 
 interface Env {
     AI: {
@@ -18,8 +18,15 @@ const model = "gpt-4-turbo";
 
 async function checkIfActiveConnectionExists(toolset: VercelAIToolSet, appName: string, entityId: string) {
   const entity = await toolset.client.getEntity(entityId);
-  const connection = await entity.getConnection({app: appName});
-  return !!connection;
+  try { 
+    await entity.getConnection({app: appName});
+    return true;
+  } catch (err) {
+    if (err instanceof ComposioError && err.errCode === COMPOSIO_SDK_ERROR_CODES.SDK.NO_CONNECTED_ACCOUNT_FOUND) {
+      return false;
+    }
+    throw err;
+  }
 }
 
 async function setupUserConnectionIfNotExists(toolset: VercelAIToolSet, appName: string, entityId: string) {
@@ -70,13 +77,13 @@ app.post('/execute_github_task', async (c) => {
     }
 
     try {
-      const tools = await toolset.getTools({ apps: ['github'],tags: ['important'] });
-      console.log(tools)
+
+      const tools = await toolset.getTools({ apps: ["github"], tags: ['important'] });
         const instruction = 'Star the repository "composiohq/composio"';
 
 
         const output = await generateText({
-          model: createOpenAI({ apiKey: c.env.OPENAI_API_KEY })("gpt-4o-mini"),
+          model: createAnthropic({ apiKey: c.env.ANTHROPIC_API_KEY })("claude-3-5-sonnet-20240620"),
           tools,
           prompt: instruction,
       });
